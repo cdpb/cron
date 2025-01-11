@@ -5,8 +5,6 @@ on:
     - cron: '19 21 * * *'
   push:
     branches: [ "main" ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "main" ]
 
@@ -64,19 +62,25 @@ jobs:
     
       - name: Run and test Docker container
         run: |
+          # env
+          cron_working='* * * * * echo working-great'
+          cron_nonworking='* * * * echo nonworking'
+          
           # run
-          docker run --name test -e CRON_WORKING='* * * * * echo working-great' -e CRON_NOTWORKING='* * * * echo nonworking' -d ${{ env.TEST_TAG }}
+          docker run --name test -e CRON_WORKING="${cron_working}" -e CRON_NOTWORKING="${cron_nonworking}" -d ${{ env.TEST_TAG }}
           
           # check if non working crontab didnt make it to the final
-          docker exec test crontab -l | grep nonworking 
+          if [[ $(echo "${cron_working}" | base64) == $(docker exec test crontab -l | base64) ]]; then
+            echo ok
+          else
+            exit 1
+          fi
 
-          # check if execution works
-          sleep 65; docker logs test | grep 'CMD (working-great)'
+          # check if execution and logging works
+          sleep 65; docker logs test 2>&1 | grep 'CMD (echo working-great)'
 
-          # cleanup
-          docker rm -f test
 
-      - name: Build and push
+      - name: Build and push and release
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
