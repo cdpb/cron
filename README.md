@@ -1,5 +1,7 @@
 # simple cron with syntax checking and logging
 
+[![Image build](https://github.com/cdpb/cron/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/cdpb/cron/actions/workflows/docker-publish.yml)
+
 ```
 services:
   cron:
