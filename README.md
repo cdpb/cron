@@ -14,8 +14,8 @@ services:
   cron:
     image: docker.io/cdpb/cron:latest
     environment:
-      - CRON_CURL1='*/30 * * * * curl https://example.org'
-      - CRON_ANOTHERCRON='30 20 * * * curl https://my.website.com'
+      - CRON_CURL1=*/30 * * * * curl https://example.org
+      - CRON_ANOTHERCRON=30 20 * * * curl https://my.website.com
 ```
 
 ```
