@@ -7,23 +7,19 @@ Image is available via
 docker.io/cdpb/cron:latest
 ```
 
-```
-ghcr.io/cdpb/cron:latest
-```
-
 ## Usage
 
 ```
 services:
   cron:
-    image: ghcr.io/cdpb/cron:latest
+    image: docker.io/cdpb/cron:latest
     environment:
       - CRON_CURL1='*/30 * * * * curl https://example.org'
       - CRON_ANOTHERCRON='30 20 * * * curl https://my.website.com'
 ```
 
 ```
-docker run -d -e CRON_CURL1='*/5 * * * * curl https://example.org' ghcr.io/cdpb/cron
+docker run -d -e CRON_CURL1='*/5 * * * * curl https://example.org' docker.io/cdpb/cron
 ```
 
 ## Syntax checking
