@@ -13,7 +13,7 @@ fi
 IFS=$'\n'
 for cron in ${cron_envs}; do
   cron_head=$(echo "${cron}" | cut -d'=' -f1)
-  cron_expr=$(echo "${cron}" | cut -d'=' -f2)
+  cron_expr=$(eval echo \$$cron_head)
   echo "${cron_expr}" > ${cron_tmp}_${cron_head}
   crontab -T ${cron_tmp}_${cron_head} 
   if [[ $? -eq 0 ]] ; then
