@@ -1,6 +1,6 @@
 FROM docker.io/alpine:latest
 
-RUN apk add curl cronie
+RUN apk add curl cronie jq
 
 COPY entrypoint.sh /entrypoint.sh
 
